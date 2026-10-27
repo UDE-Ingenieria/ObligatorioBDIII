@@ -1,9 +1,5 @@
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,8 +10,6 @@ import java.util.Properties;
 /**
  * Crea la base de datos del sistema de registro de notas (Practico 4, ejercicio 2) y carga los alumnos por
  * defecto. Se puede ejecutar mas de una vez: lo que ya existe no se modifica.
- * Ademas deja lista la carpeta de archivos del segundo medio de persistencia (alumnos.txt con los mismos
- * alumnos), si todavia no existe.
  */
 public class Main {
 
