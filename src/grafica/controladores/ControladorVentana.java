@@ -7,7 +7,7 @@ import logica.IFachada;
 
 public abstract class ControladorVentana<V extends VentanaBase> {
 
-	// protected IFachada fachada;
+	protected IFachada fachada;
 	protected V ventana;
 
 	protected ControladorVentana(IFachada fachada, V ventana) {

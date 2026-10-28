@@ -20,7 +20,7 @@ import logica.IFachada;
 
 public class ControladorPrincipal {
 
-	// private IFachada fachada;
+	private IFachada fachada;
 	private VentanaPrincipal ventana;
 
 	private ControladorVentanaNuevoAlumno controladorNuevoAlumno;
@@ -36,7 +36,7 @@ public class ControladorPrincipal {
 	public ControladorPrincipal(VentanaPrincipal ventana) {
 		this.ventana = ventana;
 		initCapaLogica();
-/*
+
 		controladorNuevoAlumno = new ControladorVentanaNuevoAlumno(fachada, new VentanaNuevoAlumno());
 		controladorListarAlumnos = new ControladorVentanaListarAlumnos(fachada, new VentanaListarAlumnos());
 		controladorRegistrarNota = new ControladorVentanaRegistrarNota(fachada, new VentanaRegistrarNota());
@@ -46,7 +46,7 @@ public class ControladorPrincipal {
 		controladorAlumnoMayorPromedio = new ControladorVentanaAlumnoMayorPromedio(fachada, new VentanaAlumnoMayorPromedio());
 		controladorContarAlumnos = new ControladorVentanaContarAlumnos(fachada, new VentanaContarAlumnos());
 		controladorActividadMasCursada = new ControladorVentanaActividadMasCursada(fachada, new VentanaActividadMasCursada());
-*/
+
 		registrarListeners();
 	}
 
@@ -63,7 +63,7 @@ public class ControladorPrincipal {
 			System.setProperty("sun.rmi.transport.tcp.responseTimeout", timeout);
 			System.setProperty("sun.rmi.transport.connectionTimeout", timeout);
 			String ruta = "//" + ip + ":" + puerto + "/Fachada";
-			//fachada = (IFachada) Naming.lookup(ruta);
+			fachada = (IFachada) Naming.lookup(ruta);
 		} catch (Exception e) {
 			ventana.showError("No se pudo conectar al servidor remoto.");
 			e.printStackTrace();
@@ -87,9 +87,8 @@ public class ControladorPrincipal {
 		return new Point(ventana.getX() + ventana.getWidth() + 10, ventana.getY());
 	}
 
-	/* 
-	 * public IFachada getCapaLogica() {
+	
+	public IFachada getCapaLogica() {
 		return fachada;
 	}
-	*/
 }
