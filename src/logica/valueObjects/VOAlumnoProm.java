@@ -1,4 +1,5 @@
-package logicaPersistencia.valueObjects;
+package logica.valueObjects;
+
 
 public class VOAlumnoProm extends VOAlumno {
 
