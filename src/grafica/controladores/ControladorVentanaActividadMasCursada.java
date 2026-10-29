@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 import grafica.ventanas.VentanaActividadMasCursada;
 import logica.IFachada;
-import logica.excepciones.LogicaPersistenciaException;
+import logica.excepciones.Persistencia;
 import logica.valueObjects.VOActividad;
 
 public class ControladorVentanaActividadMasCursada extends ControladorVentana<VentanaActividadMasCursada> {
@@ -40,7 +40,7 @@ public class ControladorVentanaActividadMasCursada extends ControladorVentana<Ve
 			ventana.mostrarActividad(actividad);
 		} catch (RemoteException ex) {
 			ventana.showError("Error de conexión con el servidor.");
-		} catch (LogicaPersistenciaException ex) {
+		} catch (Persistencia ex) {
 			ventana.showError(ex.getMessage());
 		}
 	}

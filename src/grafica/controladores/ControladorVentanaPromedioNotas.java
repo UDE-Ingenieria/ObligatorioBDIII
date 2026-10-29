@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 import grafica.ventanas.VentanaPromedioNotas;
 import logica.IFachada;
-import logica.excepciones.LogicaPersistenciaException;
+import logica.excepciones.Persistencia;
 
 public class ControladorVentanaPromedioNotas extends ControladorVentana<VentanaPromedioNotas> {
 
@@ -39,7 +39,7 @@ public class ControladorVentanaPromedioNotas extends ControladorVentana<VentanaP
 			ventana.mostrarPromedio(promedio);
 		} catch (RemoteException ex) {
 			ventana.showError("Error de conexión con el servidor.");
-		} catch (LogicaPersistenciaException ex) {
+		} catch (Persistencia ex) {
 			ventana.showError(ex.getMessage());
 		}
 	}
