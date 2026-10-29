@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 import grafica.ventanas.VentanaObtenerRegistro;
 import logica.IFachada;
-import logica.excepciones.LogicaPersistenciaException;
+import logica.excepciones.Persistencia;
 import logica.valueObjects.VORegistro;
 
 public class ControladorVentanaObtenerRegistro extends ControladorVentana<VentanaObtenerRegistro> {
@@ -45,7 +45,7 @@ public class ControladorVentanaObtenerRegistro extends ControladorVentana<Ventan
 			ventana.mostrarRegistro(registro);
 		} catch (RemoteException ex) {
 			ventana.showError("Error de conexión con el servidor.");
-		} catch (LogicaPersistenciaException ex) {
+		} catch (Persistencia ex) {
 			ventana.showError(ex.getMessage());
 		}
 	}

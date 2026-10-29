@@ -5,7 +5,7 @@ import java.util.List;
 
 import grafica.ventanas.VentanaListarAlumnos;
 import logica.IFachada;
-import logica.excepciones.LogicaPersistenciaException;
+import logica.excepciones.Persistencia;
 import logica.valueObjects.VOAlumno;
 
 public class ControladorVentanaListarAlumnos extends ControladorVentana<VentanaListarAlumnos> {
@@ -26,7 +26,7 @@ public class ControladorVentanaListarAlumnos extends ControladorVentana<VentanaL
 			ventana.mostrarAlumnos(alumnos);
 		} catch (RemoteException ex) {
 			ventana.showError("Error de conexión con el servidor.");
-		} catch (LogicaPersistenciaException ex) {
+		} catch (Persistencia ex) {
 			ventana.showError(ex.getMessage());
 		}
 	}

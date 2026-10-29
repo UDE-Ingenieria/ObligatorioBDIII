@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 import grafica.ventanas.VentanaContarAlumnos;
 import logica.IFachada;
-import logica.excepciones.LogicaPersistenciaException;
+import logica.excepciones.Persistencia;
 
 public class ControladorVentanaContarAlumnos extends ControladorVentana<VentanaContarAlumnos> {
 
@@ -39,7 +39,7 @@ public class ControladorVentanaContarAlumnos extends ControladorVentana<VentanaC
 			ventana.mostrarCantidad(cantidad);
 		} catch (RemoteException ex) {
 			ventana.showError("Error de conexión con el servidor.");
-		} catch (LogicaPersistenciaException ex) {
+		} catch (Persistencia ex) {
 			ventana.showError(ex.getMessage());
 		}
 	}
