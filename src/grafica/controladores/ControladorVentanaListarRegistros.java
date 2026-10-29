@@ -5,7 +5,7 @@ import java.util.List;
 
 import grafica.ventanas.VentanaListarRegistros;
 import logica.IFachada;
-import logica.excepciones.LogicaPersistenciaException;
+import logica.excepciones.Persistencia;
 import logica.valueObjects.VORegistroListado;
 
 public class ControladorVentanaListarRegistros extends ControladorVentana<VentanaListarRegistros> {
@@ -43,7 +43,7 @@ public class ControladorVentanaListarRegistros extends ControladorVentana<Ventan
 			}
 		} catch (RemoteException ex) {
 			ventana.showError("Error de conexión con el servidor.");
-		} catch (LogicaPersistenciaException ex) {
+		} catch (Persistencia ex) {
 			ventana.showError(ex.getMessage());
 		}
 	}
