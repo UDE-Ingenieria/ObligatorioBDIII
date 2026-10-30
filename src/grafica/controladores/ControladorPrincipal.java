@@ -1,21 +1,13 @@
 package grafica.controladores;
 
-import java.awt.Point;
-
 import java.io.FileInputStream;
 import java.rmi.Naming;
 import java.util.Properties;
 
-import grafica.ventanas.VentanaActividadMasCursada;
-import grafica.ventanas.VentanaAlumnoMayorPromedio;
-import grafica.ventanas.VentanaContarAlumnos;
-import grafica.ventanas.VentanaListarAlumnos;
-import grafica.ventanas.VentanaListarRegistros;
-import grafica.ventanas.VentanaNuevoAlumno;
-import grafica.ventanas.VentanaObtenerRegistro;
+import grafica.ventanas.VentanaAlumnos;
+import grafica.ventanas.VentanaConsultas;
 import grafica.ventanas.VentanaPrincipal;
-import grafica.ventanas.VentanaPromedioNotas;
-import grafica.ventanas.VentanaRegistrarNota;
+import grafica.ventanas.VentanaRegistros;
 import logica.IFachada;
 
 public class ControladorPrincipal {
@@ -23,31 +15,27 @@ public class ControladorPrincipal {
 	private IFachada fachada;
 	private VentanaPrincipal ventana;
 
-	private ControladorVentanaNuevoAlumno controladorNuevoAlumno;
-	private ControladorVentanaListarAlumnos controladorListarAlumnos;
-	private ControladorVentanaRegistrarNota controladorRegistrarNota;
-	private ControladorVentanaObtenerRegistro controladorObtenerRegistro;
-	private ControladorVentanaListarRegistros controladorListarRegistros;
-	private ControladorVentanaPromedioNotas controladorPromedioNotas;
-	private ControladorVentanaAlumnoMayorPromedio controladorAlumnoMayorPromedio;
-	private ControladorVentanaContarAlumnos controladorContarAlumnos;
-	private ControladorVentanaActividadMasCursada controladorActividadMasCursada;
+	private ControladorVentanaAlumnos controladorAlumnos;
+	private ControladorVentanaRegistros controladorRegistros;
+	private ControladorVentanaConsultas controladorConsultas;
 
 	public ControladorPrincipal(VentanaPrincipal ventana) {
 		this.ventana = ventana;
 		initCapaLogica();
 
-		controladorNuevoAlumno = new ControladorVentanaNuevoAlumno(fachada, new VentanaNuevoAlumno());
-		controladorListarAlumnos = new ControladorVentanaListarAlumnos(fachada, new VentanaListarAlumnos());
-		controladorRegistrarNota = new ControladorVentanaRegistrarNota(fachada, new VentanaRegistrarNota());
-		controladorObtenerRegistro = new ControladorVentanaObtenerRegistro(fachada, new VentanaObtenerRegistro());
-		controladorListarRegistros = new ControladorVentanaListarRegistros(fachada, new VentanaListarRegistros());
-		controladorPromedioNotas = new ControladorVentanaPromedioNotas(fachada, new VentanaPromedioNotas());
-		controladorAlumnoMayorPromedio = new ControladorVentanaAlumnoMayorPromedio(fachada, new VentanaAlumnoMayorPromedio());
-		controladorContarAlumnos = new ControladorVentanaContarAlumnos(fachada, new VentanaContarAlumnos());
-		controladorActividadMasCursada = new ControladorVentanaActividadMasCursada(fachada, new VentanaActividadMasCursada());
+		VentanaAlumnos ventanaAlumnos = new VentanaAlumnos();
+		controladorAlumnos = new ControladorVentanaAlumnos(fachada, ventanaAlumnos);
+		ventana.agregarPestania("Alumnos", "Alta y listado de alumnos", ventanaAlumnos);
 
-		registrarListeners();
+		VentanaRegistros ventanaRegistros = new VentanaRegistros();
+		controladorRegistros = new ControladorVentanaRegistros(fachada, ventanaRegistros);
+		ventana.agregarPestania("Registros", "Notas registradas por alumno", ventanaRegistros);
+
+		VentanaConsultas ventanaConsultas = new VentanaConsultas();
+		controladorConsultas = new ControladorVentanaConsultas(fachada, ventanaConsultas);
+		ventana.agregarPestania("Consultas", "Promedios y estadísticas", ventanaConsultas);
+
+		controladorAlumnos.listarAlumnos();
 	}
 
 	private void initCapaLogica() {
@@ -71,23 +59,6 @@ public class ControladorPrincipal {
 		}
 	}
 
-	private void registrarListeners() {
-		ventana.addNuevoAlumnoListener(e -> controladorNuevoAlumno.abrir(ubicacionVentanas()));
-		ventana.addListarAlumnosListener(e -> controladorListarAlumnos.abrir(ubicacionVentanas()));
-		ventana.addRegistrarNotaListener(e -> controladorRegistrarNota.abrir(ubicacionVentanas()));
-		ventana.addObtenerRegistroListener(e -> controladorObtenerRegistro.abrir(ubicacionVentanas()));
-		ventana.addListarRegistrosListener(e -> controladorListarRegistros.abrir(ubicacionVentanas()));
-		ventana.addPromedioNotasListener(e -> controladorPromedioNotas.abrir(ubicacionVentanas()));
-		ventana.addAlumnoMayorPromedioListener(e -> controladorAlumnoMayorPromedio.abrir(ubicacionVentanas()));
-		ventana.addContarAlumnosListener(e -> controladorContarAlumnos.abrir(ubicacionVentanas()));
-		ventana.addActividadMasCursadaListener(e -> controladorActividadMasCursada.abrir(ubicacionVentanas()));
-	}
-
-	private Point ubicacionVentanas() {
-		return new Point(ventana.getX() + ventana.getWidth() + 10, ventana.getY());
-	}
-
-	
 	public IFachada getCapaLogica() {
 		return fachada;
 	}
