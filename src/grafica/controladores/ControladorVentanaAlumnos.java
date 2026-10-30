@@ -1,22 +1,23 @@
 package grafica.controladores;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
-import grafica.ventanas.VentanaNuevoAlumno;
+import grafica.ventanas.VentanaAlumnos;
 import logica.IFachada;
 import logica.excepciones.Persistencia;
 import logica.valueObjects.VOAlumno;
 
-public class ControladorVentanaNuevoAlumno extends ControladorVentana<VentanaNuevoAlumno> {
+public class ControladorVentanaAlumnos {
 
-	public ControladorVentanaNuevoAlumno(IFachada fachada, VentanaNuevoAlumno ventanaNuevoAlumno) {
-		super(fachada, ventanaNuevoAlumno);
+	private IFachada fachada;
+	private VentanaAlumnos ventana;
+
+	public ControladorVentanaAlumnos(IFachada fachada, VentanaAlumnos ventana) {
+		this.fachada = fachada;
+		this.ventana = ventana;
 		this.ventana.addGuardarListener(e -> registrarNuevoAlumno(ventana.getCedula(), ventana.getNombre(), ventana.getApellido()));
-	}
-
-	@Override
-	protected void prepararApertura() {
-		ventana.limpiar();
+		this.ventana.addActualizarListener(e -> listarAlumnos());
 	}
 
 	public void registrarNuevoAlumno(String cedula, String nombre, String apellido) {
@@ -39,7 +40,19 @@ public class ControladorVentanaNuevoAlumno extends ControladorVentana<VentanaNue
 		try {
 			fachada.nuevoAlumno(vo);
 			ventana.showSuccess("Alumno registrado exitosamente.");
-			ventana.limpiar();
+			ventana.limpiarFormulario();
+			listarAlumnos();
+		} catch (RemoteException ex) {
+			ventana.showError("Error de conexión con el servidor.");
+		} catch (Persistencia ex) {
+			ventana.showError(ex.getMessage());
+		}
+	}
+
+	public void listarAlumnos() {
+		try {
+			List<VOAlumno> alumnos = fachada.listarAlumnos();
+			ventana.mostrarAlumnos(alumnos);
 		} catch (RemoteException ex) {
 			ventana.showError("Error de conexión con el servidor.");
 		} catch (Persistencia ex) {

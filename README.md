@@ -22,7 +22,7 @@ El objetivo del trabajo no es el dominio en sí, sino la arquitectura: una aplic
 
 ## Funcionalidades
 
-Definidas en [`IFachada`](src/logica/IFachada.java), y cada una tiene su ventana en la interfaz gráfica:
+Definidas en [`IFachada`](src/logica/IFachada.java). En la interfaz gráfica hay una pestaña por entidad (Alumnos, Registros y Consultas), dividida en una sección por operación:
 
 | Operación | Descripción |
 |---|---|
@@ -44,7 +44,7 @@ src/
 ├── Main.java           Crea la base de datos Bedelia y carga los alumnos por defecto
 ├── grafica/            Capa de presentación (MVC)
 │   ├── Aplicacion.java     Punto de entrada del cliente
-│   ├── ventanas/           Vistas Swing
+│   ├── ventanas/           Vistas Swing (una por entidad: VentanaAlumnos, VentanaRegistros, VentanaConsultas)
 │   └── controladores/      Controladores
 ├── logica/             Capa lógica
 │   ├── IFachada / Fachada  Fachada remota (RMI)
