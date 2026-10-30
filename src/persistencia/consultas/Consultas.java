@@ -50,5 +50,18 @@ public class Consultas {
 				+ "ORDER BY veces DESC "
 				+ "LIMIT 1";
 	}
-
+	
+	//limit 1 me queda el mayor solo arriba
+	public String alumnoMayorPromedio() {
+	    return "SELECT a.cedula, a.nombre, a.apellido, AVG(r.nota) AS promedio "
+	         + "FROM Alumnos a LEFT JOIN Registros r ON a.cedula = r.cedAlu "
+	         + "GROUP BY a.cedula, a.nombre, a.apellido "
+	         + "ORDER BY promedio DESC LIMIT 1";
+	}
+	
+	//distinct para que no cuente el mismo alumno dos veces si curso esa actividad mas de una vez
+	public String contarAlumnos () {
+		return "SELECT COUNT(DISTINCT cedAlu) AS cantidad FROM Registros WHERE actividad = ? AND nota = ?";
+	}
+	
 }
