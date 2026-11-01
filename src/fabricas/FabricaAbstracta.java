@@ -1,11 +1,11 @@
 package fabricas;
 
-//import daos.IDAOAlumnos;
-//import daos.IDAORegistros;
+import logica.excepciones.Persistencia;
+import persistencia.daos.*;
 
 public interface FabricaAbstracta {
 
-    //IDAOAlumnos crearDAOAlumnos();
+    IDAOAlumnos crearDAOAlumnos();
 
-    //IDAORegistros crearDAORegistros();
+    IDAORegistros crearDAORegistros(int ced) throws Persistencia;
 }
