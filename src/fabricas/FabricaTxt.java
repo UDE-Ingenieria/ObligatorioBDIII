@@ -1,19 +1,19 @@
 package fabricas;
-
-//import daos.IDAOAlumnos;
-//import daos.IDAORegistros;
-//import daos.DAOAlumnosTxt;
-//import daos.DAORegistrosTxt;
+/*
+import logica.excepciones.Persistencia;
+import persistencia.daos.*;
 
 public class FabricaTxt implements FabricaAbstracta {
 
- //   @Override
- //   public IDAOAlumnos crearDAOAlumnos() {
- //       return new DAOAlumnosTxt();
- //   }
+    @Override
+    public IDAOAlumnos crearDAOAlumnos() {
+        return new DAOAlumnosTxt();
+    }
 
- //   @Override
- //   public IDAORegistros crearDAORegistros() {
- //       return new DAORegistrosTxt();
- //   }
+   @Override
+   public IDAORegistros crearDAORegistros(int ced) throws Persistencia{
+       return new DAORegistrosTxt(ced);
+    }
+    
 }
+*/

@@ -15,7 +15,7 @@ import persistencia.consultas.Consultas;
 import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
-public class DAORegistros {
+public class DAORegistros implements IDAORegistros{
     private int cedAlumno;
     
     public DAORegistros(int ced) throws Persistencia {

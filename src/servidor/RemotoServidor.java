@@ -1,5 +1,6 @@
 package servidor;
 
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.Properties;
 import logica.IFachada;
 
 public class RemotoServidor {
-
+/*
 	public static void main(String[] args) {
 		try {
 			Properties p = new Properties();
@@ -40,5 +41,5 @@ public class RemotoServidor {
 			e.printStackTrace();
 		}
 	}
-
+*/
 }

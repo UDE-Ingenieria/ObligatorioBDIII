@@ -1,19 +1,17 @@
 package fabricas;
 
-//import daos.IDAOAlumnos;
-//import daos.IDAORegistros;
-//import daos.DAOAlumnos;
-//import daos.DAORegistros;
+import logica.excepciones.Persistencia;
+import persistencia.daos.*;
 
 public class FabricaMySQL implements FabricaAbstracta {
 
- //   @Override
- //   public IDAOAlumnos crearDAOAlumnos() {
- //       return new DAOAlumnos();
- //   }
+    @Override
+    public IDAOAlumnos crearDAOAlumnos() {
+        return new DAOAlumnos();
+    }
 
- //  @Override
- //   public IDAORegistros crearDAORegistros() {
- //       return new DAORegistros();
- //   }
+   @Override
+   public IDAORegistros crearDAORegistros(int ced) throws Persistencia{
+       return new DAORegistros(ced);
+    }
 }
