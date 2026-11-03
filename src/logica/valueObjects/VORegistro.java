@@ -1,6 +1,10 @@
 package logica.valueObjects;
 
-public class VORegistro {
+import java.io.Serializable;
+
+public class VORegistro implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String actividad;
 	private int nota;

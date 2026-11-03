@@ -56,13 +56,13 @@ public class DAOAlumnos implements IDAOAlumnos{
         Connection con = ((Conexion) icon).getConnection();
         Alumno alu = null;
         try {
-            PreparedStatement ps = con.prepareStatement(new Consultas().existeAlumno());
+            PreparedStatement ps = con.prepareStatement(new Consultas().obtenerAlumno());
             ps.setInt(1, cedA);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String nom = rs.getString("nombre");
                 String ape = rs.getString("apellido");
-                alu = new Alumno(cedA, nom, ape);
+                alu = new Alumno(cedA, nom, ape, new DAORegistros(cedA));
             }
             rs.close();
             ps.close();

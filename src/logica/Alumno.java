@@ -6,24 +6,22 @@ import logica.excepciones.Persistencia;
 import logica.valueObjects.VOActividad;
 import logica.valueObjects.VORegistro;
 import logica.valueObjects.VORegistroListado;
-/*import persistencia.daos.IDAORegistros;
-import persistencia.fabricas.CargadorFabrica;
-import persistencia.fabricas.FabricaAbstracta;
-*/
+import persistencia.daos.IDAORegistros;
 import persistencia.poolConexiones.IConexion;
 
 public class Alumno {
 
 	private int cedula;
 	private String nombre, apellido;
-	// private IDAORegistros secuencia;
+	private IDAORegistros secuencia;
 
-	public Alumno(int cedula, String nombre, String apellido) {
+	// La secuencia de registros la recibe ya creada (por la fabrica o por el DAO de alumnos):
+	// asi el alumno no necesita conocer el medio de persistencia
+	public Alumno(int cedula, String nombre, String apellido, IDAORegistros secuencia) {
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
-	//	FabricaAbstracta fabrica = CargadorFabrica.cargar();
-	//	this.secuencia = fabrica.crearIDAORegistros(cedula);
+		this.secuencia = secuencia;
 	}
 
 	public int getCedula() {
@@ -38,7 +36,7 @@ public class Alumno {
 		return apellido;
 	}
 
-	/*
+	
 	public int cantidadRegistros(IConexion icon) throws Persistencia {
 		return secuencia.largo(icon);
 	}
@@ -68,5 +66,4 @@ public class Alumno {
 	public VOActividad actividadMasCursada(IConexion icon) throws Persistencia {
 		return secuencia.actividadMasCursada(icon);
 	}
-*/
 }

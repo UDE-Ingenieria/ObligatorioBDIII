@@ -10,17 +10,18 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.Properties;
 
+import logica.Fachada;
 import logica.IFachada;
 
 public class RemotoServidor {
-/*
+
 	public static void main(String[] args) {
 		try {
 			Properties p = new Properties();
 			String nomArch = "config/config.properties";
 			p.load(new FileInputStream(nomArch));
 			String ip = p.getProperty("ipServidor");
-			String puerto = p.getProperty("puertoServidor");
+			String puerto = p.getProperty("puertoServidorRMI");
 			int port = Integer.parseInt(puerto);
 
 			IFachada obj = new Fachada();
@@ -41,5 +42,4 @@ public class RemotoServidor {
 			e.printStackTrace();
 		}
 	}
-*/
 }

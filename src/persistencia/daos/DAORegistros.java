@@ -30,7 +30,7 @@ public class DAORegistros implements IDAORegistros{
             ps.setInt(1, cedAlumno);
             ResultSet rs = ps.executeQuery();
             if (rs.next())
-                cant = rs.getInt("cantidad");
+                cant = rs.getInt("largo");
             rs.close();
             ps.close();
         } catch (SQLException e) {
@@ -43,10 +43,11 @@ public class DAORegistros implements IDAORegistros{
         Connection con = ((Conexion) icon).getConnection();
         try {
             PreparedStatement ps = con.prepareStatement(new Consultas().insertarRegistro());
+            // mismo orden que en la consulta: (numero, cedAlu, actividad, nota)
             ps.setInt(1, reg.getNumero());
-            ps.setInt(2, reg.getNota());
+            ps.setInt(2, cedAlumno);
             ps.setString(3, reg.getActividad());
-            ps.setInt(4, cedAlumno);
+            ps.setInt(4, reg.getNota());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -128,7 +129,7 @@ public class DAORegistros implements IDAORegistros{
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String act = rs.getString("actividad");
-                int cant = rs.getInt("cantidad");
+                int cant = rs.getInt("veces");
                 vo = new VOActividad(act, cant);
             }
             rs.close();
