@@ -15,11 +15,9 @@ import logica.valueObjects.VOAlumno;
 import logica.valueObjects.VOAlumnoProm;
 import logica.valueObjects.VORegistro;
 import logica.valueObjects.VORegistroListado;
-/*
+
 import persistencia.daos.IDAOAlumnos;
-Esto es parte de una supuesta fabrica abstracta, despues se puede borrar y refactorizar
-import persistencia.fabricas.CargadorFabrica;
-import persistencia.fabricas.FabricaAbstracta;
+import fabricas.FabricaAbstracta;
 
 import persistencia.poolConexiones.IConexion;
 import persistencia.poolConexiones.IPoolConexiones;
@@ -29,9 +27,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	private static final long serialVersionUID = 1L;
 
 	private IPoolConexiones ipool;
-
-	// Cuando queden los DAOS, descomentar
-	// private IDAOAlumnos daoAlumnos;
+	private IDAOAlumnos daoAlumnos;
+	private FabricaAbstracta fabrica;
 
 	public Fachada() throws RemoteException {
 		try {
@@ -47,9 +44,12 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				throw new IllegalStateException("Medio de persistencia no configurado: " + medio);
 			ipool = (IPoolConexiones) Class.forName(poolConcreto.trim()).getDeclaredConstructor().newInstance();
 
-			/*FabricaAbstracta fabrica = CargadorFabrica.cargar();
-			daoAlumnos = fabrica.crearIDAOAlumnos();
-			
+			// La fabrica concreta se carga igual que el pool: por reflexion, a partir del medio configurado
+			String fabricaConcreta = p.getProperty("fabrica." + medio.trim());
+			if (fabricaConcreta == null)
+				throw new IllegalStateException("Fabrica no configurada para el medio: " + medio);
+			fabrica = (FabricaAbstracta) Class.forName(fabricaConcreta.trim()).getDeclaredConstructor().newInstance();
+			daoAlumnos = fabrica.crearDAOAlumnos();
 		} catch (IOException | ReflectiveOperationException | RuntimeException e) {
 			throw new RemoteException("No se pudo inicializar el medio de persistencia", e);
 		}
@@ -61,7 +61,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		try {
 			if (daoAlumnos.member(icon, voA.getCedula()))
 				throw new Persistencia("El alumno ya ha sido registrado anteriormente");
-			daoAlumnos.insert(icon, new Alumno(voA.getCedula(), voA.getNombre(), voA.getApellido()));
+			daoAlumnos.insert(icon, new Alumno(voA.getCedula(), voA.getNombre(), voA.getApellido(),
+					fabrica.crearDAORegistros(voA.getCedula())));
 			ok = true;
 		} finally {
 			ipool.liberarConexion(icon, ok);
@@ -163,4 +164,3 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	}
 
 }
-*/

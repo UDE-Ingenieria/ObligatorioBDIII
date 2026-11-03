@@ -1,6 +1,10 @@
 package logica.valueObjects;
 
-public class VOAlumno {
+import java.io.Serializable;
+
+public class VOAlumno implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int cedula;
 	private String nombre;
