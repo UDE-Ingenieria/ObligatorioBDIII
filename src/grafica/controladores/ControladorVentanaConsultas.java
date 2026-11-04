@@ -32,6 +32,10 @@ public class ControladorVentanaConsultas {
 		int cedulaA;
 		try {
 			cedulaA = Integer.parseInt(cedula);
+			if (cedulaA <= 0) {
+				ventana.showWarning("La cédula debe de ser mayor a 0");
+				return;
+			}
 		} catch(NumberFormatException e) {
 			ventana.showWarning("La cédula debe ser un número entero.");
 			return;
@@ -74,6 +78,11 @@ public class ControladorVentanaConsultas {
 		int notaA;
 		try {
 			notaA = Integer.parseInt(nota);
+			if (notaA < 0) {
+				ventana.showWarning("La nota debe de ser mayor o igual a 0");
+				return;
+			}
+
 		} catch(NumberFormatException e) {
 			ventana.showWarning("La nota debe ser un número entero.");
 			return;
@@ -100,6 +109,10 @@ public class ControladorVentanaConsultas {
 		int cedulaA;
 		try {
 			cedulaA = Integer.parseInt(cedula);
+			if (cedulaA <= 0) {
+				ventana.showWarning("La cédula debe de ser mayor a 0");
+				return;
+			}
 		} catch(NumberFormatException e) {
 			ventana.showWarning("La cédula debe ser un número entero.");
 			return;
