@@ -30,6 +30,11 @@ public class ControladorVentanaAlumnos {
 		int cedulaA;
 		try {
 			cedulaA = Integer.parseInt(cedula);
+			if (cedulaA <= 0) {
+				ventana.showWarning("La cédula debe de ser mayor a 0");
+				return;
+			}
+
 		} catch(NumberFormatException e) {
 			ventana.showWarning("La cédula debe ser un número entero.");
 			return;
