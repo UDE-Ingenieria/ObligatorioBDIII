@@ -44,15 +44,20 @@ src/
 ├── Main.java           Crea la base de datos Bedelia y carga los alumnos por defecto
 ├── grafica/            Capa de presentación (MVC)
 │   ├── Aplicacion.java     Punto de entrada del cliente
-│   ├── ventanas/           Vistas Swing (una por entidad: VentanaAlumnos, VentanaRegistros, VentanaConsultas)
-│   └── controladores/      Controladores
+│   ├── ventanas/           Vistas Swing: VentanaPrincipal, VentanaAlumnos, VentanaRegistros, VentanaConsultas
+│   │                       y componentes de estilo (VentanaBase, Estilo, BotonEstilizado, RoundedBorder, StyledDialog)
+│   └── controladores/      ControladorPrincipal y un controlador por ventana
 ├── logica/             Capa lógica
 │   ├── IFachada / Fachada  Fachada remota (RMI)
-│   ├── valueObjects/       VOs que viajan entre capas
+│   ├── Alumno, Registro    Clases de dominio
+│   ├── valueObjects/       VOs que viajan entre capas (VOAlumno, VOAlumnoProm, VOActividad, VORegistro, VORegistroListado)
 │   └── excepciones/        Excepción Persistencia
 ├── fabricas/           Abstract Factory (FabricaAbstracta, FabricaMySQL, FabricaTxt)
-├── persistencia/
-│   └── poolConexiones/     IConexion, IPoolConexiones y sus implementaciones (MySQL y Txt)
+├── persistencia/       Capa de persistencia
+│   ├── daos/               IDAOAlumnos, IDAORegistros y sus implementaciones MySQL (DAOAlumnos, DAORegistros)
+│   ├── consultas/          Consultas: sentencias SQL usadas por los DAOs
+│   └── poolConexiones/     IConexion, IPoolConexiones y sus implementaciones (Conexion/PoolConexiones para MySQL,
+│                           ConexionTxt/PoolConexionesTxt para archivos de texto)
 └── servidor/
     └── RemotoServidor.java Publica la fachada por RMI
 ```
@@ -68,7 +73,9 @@ Todo se controla desde [`config/config.properties`](config/config.properties):
 | `tope` | Cantidad máxima de conexiones del pool MySQL |
 | `nivelTransaccionalidad` | Nivel de aislamiento de las conexiones MySQL |
 | `medioPersistencia` | `mysql` o `txt`: **medio de persistencia a usar** |
+| `timeoutMs` | Timeout (ms) de las llamadas RMI del cliente |
 | `pool.mysql`, `pool.txt` | Clase concreta del pool para cada medio |
+| `fabrica.mysql`, `fabrica.txt` | Clase concreta de la fábrica para cada medio |
 
 Para cambiar de medio de persistencia basta con modificar `medioPersistencia` y reiniciar el servidor.
 
@@ -86,7 +93,7 @@ Es un proyecto de Eclipse (Java), con los drivers de MySQL en `config/`.
 
 ## Estado actual
 
-Trabajo en curso. Ya están el pool de conexiones MySQL, el pool de archivos de texto, los value objects, la fachada, el servidor RMI y la interfaz gráfica con sus controladores. Quedan por completar las clases de dominio y DAO (`Alumno`, `Registro`, `IDAOAlumnos`, `IDAORegistros`, `DAOAlumnos*`, `DAORegistros*`) y conectar las fábricas, hoy comentadas en `Fachada` y `FabricaAbstracta`.
+Trabajo en curso. Ya están el pool de conexiones MySQL, el pool de archivos de texto, los value objects, las clases de dominio, la fachada (que carga pool y fábrica por reflexión), el servidor RMI, la interfaz gráfica con sus controladores y la persistencia en MySQL completa (DAOs, consultas y `FabricaMySQL`). Falta la persistencia en archivos de texto: los DAOs `DAOAlumnosTxt` y `DAORegistrosTxt` no existen todavía y `FabricaTxt` está comentada, por lo que hoy solo funciona `medioPersistencia=mysql`.
 
 ## Entrega
 
