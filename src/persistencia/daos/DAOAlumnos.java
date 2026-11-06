@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fabricas.FabricaAbstracta;
 import logica.Alumno;
 import logica.excepciones.Persistencia;
 import logica.valueObjects.VOAlumno;
@@ -16,8 +17,10 @@ import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
 public class DAOAlumnos implements IDAOAlumnos{
-	public DAOAlumnos() {
-        
+	private FabricaAbstracta fabrica;
+
+	public DAOAlumnos(FabricaAbstracta fabrica) {
+        this.fabrica = fabrica;
     }
 	
     public boolean member(IConexion icon, int cedA) throws Persistencia {
@@ -62,7 +65,7 @@ public class DAOAlumnos implements IDAOAlumnos{
             if (rs.next()) {
                 String nom = rs.getString("nombre");
                 String ape = rs.getString("apellido");
-                alu = new Alumno(cedA, nom, ape, new DAORegistros(cedA));
+                alu = new Alumno(cedA, nom, ape, fabrica);
             }
             rs.close();
             ps.close();

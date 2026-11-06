@@ -7,7 +7,7 @@ public class FabricaMySQL implements FabricaAbstracta {
 
     @Override
     public IDAOAlumnos crearDAOAlumnos() {
-        return new DAOAlumnos();
+        return new DAOAlumnos(this);
     }
 
    @Override
