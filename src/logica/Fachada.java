@@ -38,14 +38,17 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			fis.close();
 			// Los nombres del pool y de la fabrica concretos salen del archivo de configuracion:
 			// el medio de persistencia usado no queda visible en el codigo
+			
 			String medio = p.getProperty("medioPersistencia");
 			String poolConcreto = (medio == null) ? null : p.getProperty("pool." + medio.trim());
+			
 			if (poolConcreto == null)
 				throw new IllegalStateException("Medio de persistencia no configurado: " + medio);
 			ipool = (IPoolConexiones) Class.forName(poolConcreto.trim()).getDeclaredConstructor().newInstance();
 
 			// La fabrica concreta se carga igual que el pool: por reflexion, a partir del medio configurado
 			String fabricaConcreta = p.getProperty("fabrica." + medio.trim());
+			
 			if (fabricaConcreta == null)
 				throw new IllegalStateException("Fabrica no configurada para el medio: " + medio);
 			fabrica = (FabricaAbstracta) Class.forName(fabricaConcreta.trim()).getDeclaredConstructor().newInstance();
@@ -61,8 +64,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		try {
 			if (daoAlumnos.member(icon, voA.getCedula()))
 				throw new Persistencia("El alumno ya ha sido registrado anteriormente");
-			daoAlumnos.insert(icon, new Alumno(voA.getCedula(), voA.getNombre(), voA.getApellido(),
-					fabrica.crearDAORegistros(voA.getCedula())));
+			else
+				daoAlumnos.insert(icon, new Alumno(voA.getCedula(), voA.getNombre(), voA.getApellido(), fabrica));
 			ok = true;
 		} finally {
 			ipool.liberarConexion(icon, ok);
@@ -98,6 +101,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			VORegistro voR = alu.obtenerRegistro(icon, numR);
 			if (voR == null)
 				throw new Persistencia("El alumno no tiene un registro con ese numero");
+			
 			return voR;
 		} finally {
 			ipool.liberarConexion(icon, true);
@@ -148,8 +152,10 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		IConexion icon = ipool.obtenerConexion(false);
 		try {
 			Alumno alu = buscarAlumno(icon, cedA);
+			
 			if (alu.cantidadRegistros(icon) == 0)
 				throw new Persistencia("El alumno no tiene actividades registradas");
+			
 			return alu.actividadMasCursada(icon);
 		} finally {
 			ipool.liberarConexion(icon, true);

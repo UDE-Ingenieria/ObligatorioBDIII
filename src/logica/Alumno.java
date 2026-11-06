@@ -2,6 +2,7 @@ package logica;
 
 import java.util.List;
 
+import fabricas.FabricaAbstracta;
 import logica.excepciones.Persistencia;
 import logica.valueObjects.VOActividad;
 import logica.valueObjects.VORegistro;
@@ -15,15 +16,15 @@ public class Alumno {
 	private String nombre, apellido;
 	private IDAORegistros secuencia;
 
-	// La secuencia de registros la recibe ya creada (por la fabrica o por el DAO de alumnos):
+	// La secuencia de registros se la pide a la fabrica abstracta:
 	// asi el alumno no necesita conocer el medio de persistencia
-	public Alumno(int cedula, String nombre, String apellido, IDAORegistros secuencia) {
+	public Alumno(int cedula, String nombre, String apellido, FabricaAbstracta fa) throws Persistencia {
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.secuencia = secuencia;
+		this.secuencia = fa.crearDAORegistros(cedula);
 	}
-
+	
 	public int getCedula() {
 		return cedula;
 	}
@@ -35,7 +36,6 @@ public class Alumno {
 	public String getApellido() {
 		return apellido;
 	}
-
 	
 	public int cantidadRegistros(IConexion icon) throws Persistencia {
 		return secuencia.largo(icon);
