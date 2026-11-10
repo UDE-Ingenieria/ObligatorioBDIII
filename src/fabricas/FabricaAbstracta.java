@@ -1,7 +1,8 @@
 package fabricas;
 
 import logica.excepciones.Persistencia;
-import persistencia.daos.*;
+import persistencia.daos.IDAOAlumnos;
+import persistencia.daos.IDAORegistros;
 
 public interface FabricaAbstracta {
 
