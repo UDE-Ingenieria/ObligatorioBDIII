@@ -91,10 +91,6 @@ Es un proyecto de Eclipse (Java), con los drivers de MySQL en `config/`.
 
 > Los comandos se ejecutan desde la raíz del proyecto, ya que la configuración se lee de la ruta relativa `config/config.properties`.
 
-## Estado actual
-
-Trabajo en curso. Ya están el pool de conexiones MySQL, el pool de archivos de texto, los value objects, las clases de dominio, la fachada (que carga pool y fábrica por reflexión), el servidor RMI, la interfaz gráfica con sus controladores y la persistencia en MySQL completa (DAOs, consultas y `FabricaMySQL`). Falta la persistencia en archivos de texto: los DAOs `DAOAlumnosTxt` y `DAORegistrosTxt` no existen todavía y `FabricaTxt` está comentada, por lo que hoy solo funciona `medioPersistencia=mysql`.
-
 ## Entrega
 
 - Entrega: lunes 16 de noviembre de 2026, 23:59 hs (proyecto Eclipse por e-mail al docente).

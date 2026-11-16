@@ -1,7 +1,5 @@
 package logica;
 
-//Cuando queden los DAOS, descomentar
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.rmi.RemoteException;
